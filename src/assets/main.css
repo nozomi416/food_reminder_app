@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import './base.css';
+
+#app {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  height: 100vh;
+}
+
+main {
+  margin: 0 auto;
+  margin-top: 80px;
+}
