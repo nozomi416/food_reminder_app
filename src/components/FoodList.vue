@@ -1,49 +1,57 @@
 <template>
     <div class="w-full">
         <!-- ソートボタン -->
-        <div class="flex items-center justify-between flex-column md:flex-row flex-wrap pt-2 pb-3 bg-white">
-            <div>
-                <div style="display: none;">
-                    <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
-                        class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5"
-                        type="button">
-                        <span class="sr-only">Action button</span>
-                        Action
-                        <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 4 4 4-4" />
-                        </svg>
-                    </button>
-                </div>
-                <!-- Dropdown menu -->
-                <div id="dropdownAction"
-                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 ">
-                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdownActionButton">
-                        <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Reward</a>
-                        </li>
-                        <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Promote</a>
-                        </li>
-                        <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Activate
-                                account</a>
-                        </li>
-                    </ul>
-                    <div class="py-1">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Delete
-                            User</a>
+        <div class="fixed top-0 left-0 right-0 bg-white z-40 px-6 pt-19">
+            <div class="flex items-center justify-between flex-column md:flex-row flex-wrap pt-1 pb-3 bg-white">
+                <div>
+                    <div style="display: none;">
+                        <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
+                            class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5"
+                            type="button">
+                            <span class="sr-only">Action button</span>
+                            Action
+                            <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="m1 1 4 4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                    <!-- Dropdown menu -->
+                    <div id="dropdownAction"
+                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 ">
+                        <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdownActionButton">
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Reward</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Promote</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Activate
+                                    account</a>
+                            </li>
+                        </ul>
+                        <div class="py-1">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Delete
+                                User</a>
+                        </div>
                     </div>
                 </div>
+                <a href="#" @click.prevent="isModalOpen = true" class="font-medium text-orange-600">追加</a>
             </div>
-            <a href="#" @click.prevent="isModalOpen = true" class="font-medium text-orange-600">追加</a>
         </div>
 
         <!-- 一覧 -->
-        <ul class="w-full text-gray-500">
+        <ul class="w-full text-gray-500 mt-30">
+            <!-- 見出し部分 -->
+            <li
+                class="flex justify-between items-center py-2 px-4 font-semibold text-gray-500 border-b border-gray-200">
+                <span>食品名</span>
+                <span>期限</span>
+            </li>
             <li v-for="food in foods" :key="food.id"
-                class="flex justify-between items-center bg-white py-3 border-b border-gray-200 last:border-b-0"
+                class="flex justify-between items-center py-3 border-b border-gray-200 last:border-b-0"
                 @click="openEditModal(food)">
                 <div class="flex items-center space-x-4">
                     <div class="h-2.5 w-2.5 rounded-full" :class="getStatusColor(food.expiry_date)"></div>
