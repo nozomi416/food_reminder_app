@@ -1,85 +1,70 @@
 <template>
     <div class="w-full">
         <!-- ソートボタン -->
-        <div
-            class="flex items-center justify-between flex-column md:flex-row flex-wrap pt-2 pb-3 bg-white dark:bg-gray-900">
+        <div class="flex items-center justify-between flex-column md:flex-row flex-wrap pt-2 pb-3 bg-white">
             <div>
-                <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
-                    class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                    type="button">
-                    <span class="sr-only">Action button</span>
-                    Action
-                    <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 4 4 4-4" />
-                    </svg>
-                </button>
+                <div style="display: none;">
+                    <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
+                        class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5"
+                        type="button">
+                        <span class="sr-only">Action button</span>
+                        Action
+                        <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+                </div>
                 <!-- Dropdown menu -->
                 <div id="dropdownAction"
-                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
-                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
+                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 ">
+                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdownActionButton">
                         <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reward</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Reward</a>
                         </li>
                         <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Promote</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Promote</a>
                         </li>
                         <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Activate
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Activate
                                 account</a>
                         </li>
                     </ul>
                     <div class="py-1">
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Delete
                             User</a>
                     </div>
                 </div>
             </div>
-            <a href="#" @click.prevent="isModalOpen = true"
-                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">追加</a>
+            <a href="#" @click.prevent="isModalOpen = true" class="font-medium text-orange-600">追加</a>
         </div>
 
-        <!-- 一覧テーブル -->
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <tbody>
-                <tr v-for="food in foods" :key="food.id"
-                    class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    @click="openEditModal(food)">
-                    <td>
-                        <div class="items-center">
-                            <div class="h-2.5 w-2.5 rounded-full" :class="getStatusColor(food.expiry_date)"></div>
-                        </div>
-                    </td>
-                    <th scope="row" class="px-6 py-3 text-gray-900 whitespace-nowrap dark:text-white">
-                        <div>
-                            <div class="font-semibold">{{ food.name }}</div>
-                        </div>
-                    </th>
-                    <td class="px-6 py-3 text-right">
-                        <div class="font-semibold">{{ food.expiry_date }}</div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- 一覧 -->
+        <ul class="w-full text-gray-500">
+            <li v-for="food in foods" :key="food.id"
+                class="flex justify-between items-center bg-white py-3 border-b border-gray-300 last:border-b-0"
+                @click="openEditModal(food)">
+                <div class="flex items-center space-x-4">
+                    <div class="h-2.5 w-2.5 rounded-full" :class="getStatusColor(food.expiry_date)"></div>
+                    <span class="font-semibold text-gray-900">{{ food.name }}</span>
+                </div>
+                <span class="font-semibold text-gray-900">{{ food.expiry_date }}</span>
+            </li>
+        </ul>
 
         <!-- 食品登録モーダル -->
         <div v-if="isModalOpen" id="createFoodModal" tabindex="-1" aria-hidden="true"
             class="fixed top-0 left-0 right-0 z-50 flex items-center justify-center p-4 md:inset-0 h-[calc(100%-1rem)]">
             <div class="relative w-full max-w-2xl max-h-full">
-                <form @submit.prevent="createFood" class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                <form @submit.prevent="createFood" class="relative bg-white rounded-lg shadow-sm">
                     <!-- ヘッダー -->
-                    <div
-                        class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600 border-gray-200">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    <div class="flex items-start justify-between p-4 border-b rounded-t border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-900">
                             食品登録
                         </h3>
                         <button type="button" @click="isModalOpen = false"
-                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -92,46 +77,43 @@
                     <div class="p-6 space-y-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900">
                                     食品名
                                 </label>
                                 <input v-model="formData.name" type="text" name="name" id="name"
-                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
                                     placeholder="例） たまご" required>
                             </div>
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="expiry_date"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <label for="expiry_date" class="block mb-2 text-sm font-medium text-gray-900">
                                     期限
                                 </label>
                                 <input v-model="formData.expiry_date" type="date" name="expiry_date" id="expiry_date"
-                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
                                     required>
                             </div>
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="purchase_date"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <label for="purchase_date" class="block mb-2 text-sm font-medium text-gray-900">
                                     購入日
                                 </label>
                                 <input v-model="formData.purchase_date" type="date" name="purchase_date"
                                     id="purchase_date"
-                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
                             </div>
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="note" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <label for="note" class="block mb-2 text-sm font-medium text-gray-900">
                                     メモ
                                 </label>
                                 <textarea v-model="formData.note" name="note" id="note" rows="4"
-                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"></textarea>
                             </div>
                         </div>
                     </div>
 
                     <!-- フッター -->
-                    <div
-                        class="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <div class="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b">
                         <button type="submit"
-                            class="ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            class="ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                             登録
                         </button>
                     </div>
@@ -143,15 +125,14 @@
         <div v-if="isEditModalOpen" id="editFoodModal" tabindex="-1" aria-hidden="true"
             class="fixed top-0 left-0 right-0 z-50 flex items-center justify-center p-4 md:inset-0 h-[calc(100%-1rem)]">
             <div class="relative w-full max-w-2xl max-h-full">
-                <form class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                <form class="relative bg-white rounded-lg shadow-sm">
                     <!-- ヘッダー -->
-                    <div
-                        class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600 border-gray-200">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    <div class="flex items-start justify-between p-4 border-b rounded-t border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-900">
                             食品編集
                         </h3>
                         <button type="button" @click="closeModal"
-                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -164,50 +145,47 @@
                     <div class="p-6 space-y-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900">
                                     食品名
                                 </label>
                                 <input v-model="foodToEdit.name" type="text" name="name" id="name"
-                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
                                     placeholder="例） たまご" required>
                             </div>
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="expiry_date"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <label for="expiry_date" class="block mb-2 text-sm font-medium text-gray-900">
                                     期限
                                 </label>
                                 <input v-model="foodToEdit.expiry_date" type="date" name="expiry_date" id="expiry_date"
-                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
                                     required>
                             </div>
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="purchase_date"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <label for="purchase_date" class="block mb-2 text-sm font-medium text-gray-900">
                                     購入日
                                 </label>
                                 <input v-model="foodToEdit.purchase_date" type="date" name="purchase_date"
                                     id="purchase_date"
-                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
                             </div>
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="note" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <label for="note" class="block mb-2 text-sm font-medium text-gray-900">
                                     メモ
                                 </label>
                                 <textarea v-model="foodToEdit.note" name="note" id="note" rows="4"
-                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                                    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"></textarea>
                             </div>
                         </div>
                     </div>
 
                     <!-- フッター -->
-                    <div
-                        class="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <div class="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b">
                         <button @click.prevent="deleteFood"
-                            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                             削除
                         </button>
                         <button @click.prevent="updateFood"
-                            class="ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            class="ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                             保存
                         </button>
                     </div>
@@ -266,7 +244,7 @@ const getStatusColor = (expiryDate) => {
     const diff = expiry.diff(today, "day");
 
     if (diff < 0) return "bg-red-500";
-    if (diff <= 3) return "bg-yellow-500";
+    if (diff <= 3) return "bg-amber-400";
     return "bg-green-500";
 };
 
