@@ -43,7 +43,7 @@
         <!-- 一覧 -->
         <ul class="w-full text-gray-500">
             <li v-for="food in foods" :key="food.id"
-                class="flex justify-between items-center bg-white py-3 border-b border-gray-300 last:border-b-0"
+                class="flex justify-between items-center bg-white py-3 border-b border-gray-200 last:border-b-0"
                 @click="openEditModal(food)">
                 <div class="flex items-center space-x-4">
                     <div class="h-2.5 w-2.5 rounded-full" :class="getStatusColor(food.expiry_date)"></div>
