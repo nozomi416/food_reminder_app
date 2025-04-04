@@ -47,9 +47,9 @@
                 @click="openEditModal(food)">
                 <div class="flex items-center space-x-4">
                     <div class="h-2.5 w-2.5 rounded-full" :class="getStatusColor(food.expiry_date)"></div>
-                    <span class="font-semibold text-gray-900">{{ food.name }}</span>
+                    <span class="font-medium text-gray-900">{{ food.name }}</span>
                 </div>
-                <span class="font-semibold text-gray-900">{{ food.expiry_date }}</span>
+                <span class="font-medium text-gray-900">{{ food.expiry_date }}</span>
             </li>
         </ul>
 
