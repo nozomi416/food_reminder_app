@@ -1,24 +1,24 @@
 <template>
     <div class="flex justify-center">
         <div
-            class="w-full mt-10 px-6">
+            class="w-full mt-10 px-4">
             <form class="space-y-6" @submit.prevent="signup">
                 <h5 class="text-center text-2xl font-bold text-orange-500">アカウント登録</h5>
                 <p v-if="errorMessage" class="text-red-500 mt-2">{{ errorMessage }}</p>
                 <div>
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900">メールアドレス</label>
+                    <label for="email" class="block mb-2 font-medium text-gray-900">メールアドレス</label>
                     <input v-model="email" type="email" name="email" id="email"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="name@company.com" required />
                 </div>
                 <div>
-                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">パスワード</label>
+                    <label for="password" class="block mb-2 font-medium text-gray-900 dark:text-white">パスワード</label>
                     <input v-model="password" type="password" name="password" id="password" placeholder="••••••••"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         required />
                 </div>
                 <button type="submit"
-                    class="w-full text-white bg-orange-400 font-medium rounded-lg px-5 py-2.5 text-center">登録</button>
+                    class="w-full text-white bg-orange-400 font-medium rounded-lg mt-1 px-5 py-3 text-center">登録</button>
             </form>
             <div class="font-medium mt-4 flex flex-col gap-1">
                 <router-link to="/login" class="text-center text-stone-400">ログイン画面に戻る</router-link>
