@@ -252,7 +252,7 @@ const getStatusColor = (expiryDate) => {
     const diff = expiry.diff(today, "day");
 
     if (diff < 0) return "bg-red-500";
-    if (diff <= 3) return "bg-amber-400";
+    if (diff < 3) return "bg-amber-400";
     return "bg-green-500";
 };
 
