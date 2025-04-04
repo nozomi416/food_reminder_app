@@ -12,7 +12,7 @@
                         placeholder="name@company.com" required />
                 </div>
                 <div>
-                    <label for="password" class="block mb-2 font-medium text-gray-900 dark:text-white">パスワード</label>
+                    <label for="password" class="block mb-2 font-medium text-gray-900">パスワード</label>
                     <input v-model="password" type="password" name="password" id="password" placeholder="••••••••"
                         class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         required />
