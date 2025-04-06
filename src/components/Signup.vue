@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center">
         <div
-            class="w-full mt-10 px-4">
+            class="w-full mt-6">
             <form class="space-y-6" @submit.prevent="signup">
                 <h5 class="text-center text-2xl font-bold text-orange-500">アカウント登録</h5>
                 <p v-if="errorMessage" class="text-red-500 mt-2">{{ errorMessage }}</p>

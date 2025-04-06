@@ -4,6 +4,12 @@
         <div class="fixed top-0 left-0 right-0 bg-white z-40 px-6 pt-19">
             <div class="flex items-center justify-between flex-column md:flex-row flex-wrap pt-1 pb-3 bg-white">
                 <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                    </svg>
+
                     <div style="display: none;">
                         <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
                             class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5"
@@ -63,12 +69,12 @@
 
         <!-- 食品登録モーダル -->
         <div v-if="isModalOpen" id="createFoodModal" tabindex="-1" aria-hidden="true"
-            class="fixed top-0 left-0 right-0 z-50 flex items-center justify-center p-4 md:inset-0 h-[calc(100%-1rem)]">
-            <div class="relative w-full max-w-2xl max-h-full">
-                <form @submit.prevent="createFood" class="relative bg-white rounded-lg shadow-sm">
+        class="fixed inset-0 z-40 flex items-center justify-center bg-white mt-16">
+            <div class="relative w-full h-full">
+                <form @submit.prevent="createFood" class="relative">
                     <!-- ヘッダー -->
-                    <div class="flex items-start justify-between p-4 border-b rounded-t border-gray-200">
-                        <h3 class="text-xl font-semibold text-gray-900">
+                    <div class="flex items-start justify-between p-4 border-b border-gray-200">
+                        <h3 class="text-xl font-semibold text-orange-500">
                             食品登録
                         </h3>
                         <button type="button" @click="isModalOpen = false"
@@ -119,9 +125,9 @@
                     </div>
 
                     <!-- フッター -->
-                    <div class="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b">
+                    <div class="flex items-center p-6 border-t border-gray-200">
                         <button type="submit"
-                            class="ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            class="w-full text-white bg-orange-400 font-medium rounded-lg text-sm py-3 text-center">
                             登録
                         </button>
                     </div>
