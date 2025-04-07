@@ -59,18 +59,37 @@
         <!-- 一覧リスト -->
         <ul class="w-full text-sm text-gray-500 mt-30">
             <!-- 見出し部分 -->
-            <li class="flex justify-between items-center py-2 font-semibold text-gray-500 border-b border-gray-200">
+            <li class="flex items-center py-2 font-semibold text-gray-500 border-b border-gray-200">
                 <span class="w-[10%] text-left"></span>
                 <span class="w-[65%] text-left">食品名</span>
                 <span class="w-[25%] text-left">期限</span>
             </li>
-            <li v-for="food in foods" :key="food.id"
-                class="flex items-center py-3 border-b border-gray-200 last:border-b-0" @click="openEditModal(food)">
-                <div class="w-[10%] flex justify-start">
-                    <div class="h-2.5 w-2.5 rounded-full" :class="getStatusColor(food.expiry_date)"></div>
+            <!-- 食品リスト -->
+            <li v-for="food in foods" :key="food.id" class="overflow-hidden bg-white">
+                <div class="flex w-[calc(100%+80px)] transition-transform duration-200"
+                    :style="{ transform: `translateX(${swipePositions[food.id] || 0}px)` }"
+                    @touchstart="startSwipe($event, food.id)" @touchmove="swipeItem($event, food.id)"
+                    @touchend="endSwipe(food.id)">
+                    <!-- 本体部分 -->
+                    <div class="flex w-full items-center py-3 border-b border-gray-200 bg-white"
+                        @click="openEditModal(food)">
+                        <div class="w-[10%] flex justify-start">
+                            <div class="h-2.5 w-2.5 rounded-full" :class="getStatusColor(food.expiry_date)"></div>
+                        </div>
+                        <span class="w-[65%] font-medium text-gray-900 text-left">{{ food.name }}</span>
+                        <span class="w-[25%] font-medium text-gray-900 text-left">{{ food.expiry_date }}</span>
+                    </div>
+
+                    <!-- 削除ボタン -->
+                    <button @click.stop="deleteFood(food.id)"
+                        class="w-20 bg-red-500 text-white flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd"
+                                d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
                 </div>
-                <span class="w-[65%] font-medium text-gray-900 text-left">{{ food.name }}</span>
-                <span class="w-[25%] font-medium text-gray-900 text-left">{{ food.expiry_date }}</span>
             </li>
         </ul>
     </div>
@@ -163,25 +182,41 @@ const saveFood = async () => {
     closeModal();
 };
 
-// 削除処理
-const deleteFood = async () => {
-    try {
-        if (!foodToEdit.value.id) return;
+// スワイプ用
+const swipePositions = ref({})
+const startX = ref(0)
 
+function startSwipe(event, id) {
+    startX.value = event.touches[0].clientX
+}
+
+function swipeItem(event, id) {
+    const moveX = event.touches[0].clientX - startX.value
+    swipePositions.value[id] = Math.max(-80, Math.min(0, moveX))
+}
+
+function endSwipe(id) {
+    if (swipePositions.value[id] < -40) {
+        swipePositions.value[id] = -80
+    } else {
+        swipePositions.value[id] = 0
+    }
+}
+
+// 削除処理
+const deleteFood = async (id) => {
+    try {
         const { error } = await supabase
             .from('foods')
             .delete()
-            .eq('id', foodToEdit.value.id);
+            .eq('id', id);
 
         if (error) {
             console.error('削除エラー:', error.message);
         } else {
             console.log('削除成功:');
-            isEditModalOpen.value = false;
             fetchFoods();
         }
-        // emit('updateList'); // 食品リストを更新（親コンポーネント用）
-        // emit('closeModal'); // モーダルを閉じる
     } catch (err) {
         console.error('予期しないエラー:', err);
     }
