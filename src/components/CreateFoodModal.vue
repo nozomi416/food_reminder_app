@@ -33,7 +33,7 @@
                             </label>
                             <input v-model="formData.expiry_date" type="date" name="expiry_date" id="expiry_date"
                                 class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                                required>
+                                style="appearance: none; font-size: 1rem;" required>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
                             <label for="purchase_date" class="block mb-2 text-sm font-medium text-gray-900">
