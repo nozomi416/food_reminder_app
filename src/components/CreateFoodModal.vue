@@ -4,8 +4,7 @@
         <div class="relative w-full h-full">
             <form @submit.prevent="createFood" class="relative">
                 <!-- ヘッダー -->
-                <div class="flex items-start justify-between p-4">
-                    <h3 class="text-xl font-semibold">食品の登録</h3>
+                <div class="flex items-start justify-between px-4 pt-4">
                     <button type="button" @click="closeModal"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -17,7 +16,7 @@
                 </div>
 
                 <!-- 内容 -->
-                <div class="p-6 space-y-6">
+                <div class="px-6 pt-2 space-y-6">
                     <div class="grid grid-cols-6 gap-6">
                         <div class="col-span-6 sm:col-span-3">
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900">
@@ -33,14 +32,15 @@
                             </label>
                             <input v-model="formData.expiry_date" type="date" name="expiry_date" id="expiry_date"
                                 class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                                style="appearance: none; font-size: 1rem;" required>
+                                style="appearance: none;" required>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
                             <label for="purchase_date" class="block mb-2 text-sm font-medium text-gray-900">
                                 購入日
                             </label>
                             <input v-model="formData.purchase_date" type="date" name="purchase_date" id="purchase_date"
-                                class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
+                                class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+                                style="appearance: none;">
                         </div>
                         <div class="col-span-6 sm:col-span-3">
                             <label for="note" class="block mb-2 text-sm font-medium text-gray-900">

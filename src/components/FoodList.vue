@@ -59,11 +59,16 @@
         <!-- 一覧リスト -->
         <ul class="w-full text-sm text-gray-500 mt-30">
             <!-- 見出し部分 -->
-            <li class="flex items-center py-2 font-semibold text-gray-500 border-b border-gray-200">
-                <span class="w-[10%] text-left"></span>
-                <span class="w-[65%] text-left">食品名</span>
-                <span class="w-[25%] text-left">期限</span>
+            <li class="overflow-hidden bg-white">
+                <div class="w-[calc(100%+80px)]">
+                    <div class="flex w-full tems-center py-2 font-semibold text-gray-500 border-b border-gray-200">
+                        <span class="w-[10%] text-left"></span>
+                        <span class="w-[60%] text-left">食品名</span>
+                        <span class="w-[30%] text-left">期限</span>
+                    </div>
+                </div>
             </li>
+            
             <!-- 食品リスト -->
             <li v-for="food in foods" :key="food.id" class="overflow-hidden bg-white">
                 <div class="flex w-[calc(100%+80px)] transition-transform duration-200"
@@ -76,8 +81,8 @@
                         <div class="w-[10%] flex justify-start">
                             <div class="h-2.5 w-2.5 rounded-full" :class="getStatusColor(food.expiry_date)"></div>
                         </div>
-                        <span class="w-[65%] font-medium text-gray-900 text-left">{{ food.name }}</span>
-                        <span class="w-[25%] font-medium text-gray-900 text-left">{{ food.expiry_date }}</span>
+                        <span class="w-[60%] font-medium text-gray-900 text-left">{{ food.name }}</span>
+                        <span class="w-[30%] font-medium text-gray-900 text-left">{{ food.expiry_date }}</span>
                     </div>
 
                     <!-- 削除ボタン -->
