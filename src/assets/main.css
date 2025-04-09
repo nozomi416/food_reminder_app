@@ -1,15 +1,15 @@
 @import "tailwindcss";
 @import './base.css';
 
+@theme {
+  --color-primary: #41B9D5;
+  --color-secondary: #FCFBFF;
+}
+
 #app {
   max-width: 480px;
   width: 100%;
   margin: 0 auto;
   height: 100vh;
   overflow-y: auto; 
-}
-
-main {
-  margin: 0 auto;
-  margin-top: 80px;
 }

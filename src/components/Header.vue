@@ -3,10 +3,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex-shrink-0">
-                    <h1 class="text-2xl font-semibold text-orange-500">Food Reminder</h1>
+                    <h1 class="text-2xl font-semibold text-primary">Food Reminder</h1>
                 </div>
 
-                <div class="font-medium text-gray-500" v-if="!['/login', '/signup'].includes($route.path)">
+                <div class="font-medium text-stone-600 text-sm" v-if="!['/login', '/signup'].includes($route.path)">
                     <button @click="logout">ログアウト</button>
                 </div>
             </div>

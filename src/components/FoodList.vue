@@ -1,51 +1,67 @@
 <template>
-    <div class="w-full">
-        <!-- 操作ボタン -->
-        <div class="fixed top-0 left-0 right-0 bg-white z-40 px-6 pt-19">
-            <div class="flex items-center justify-between flex-column md:flex-row flex-wrap pt-1 pb-3 bg-white">
-                <div>
+    <div class="w-full text-sm">
+        <!-- 固定部分 -->
+        <div class="fixed top-0 left-0 right-0 bg-secondary z-40 pt-19">
+            <div class="flex items-center justify-between flex-column md:flex-row flex-wrap pt-1 pb-4 px-6">
+                <div class="text-stone-600">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
                     </svg>
+                </div>
+                <a href="#" @click.prevent="isCreateModalOpen = true" class="font-medium text-primary">追加</a>
+            </div>
 
-                    <div style="display: none;">
-                        <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
-                            class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5"
-                            type="button">
-                            <span class="sr-only">Action button</span>
-                            Action
-                            <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m1 1 4 4 4-4" />
+            <ul class="w-full bg-white px-6 rounded-t-xl">
+                <!-- 見出し部分 -->
+                <li class="overflow-hidden bg-white">
+                    <div class="flex w-[calc(100%+80px)]">
+                        <div
+                            class="h-12 flex w-full items-center py-2 font-semibold text-stone-600 border-b border-gray-200 bg-white">
+                            <div class="w-[10%]"></div>
+                            <span class="w-[60%] text-left">食品名</span>
+                            <span class="w-[30%] text-left">期限</span>
+                        </div>
+                        <!-- 空の削除ボタン分スペース -->
+                        <div class="w-20"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 一覧リスト -->
+        <div class="pt-42">
+            <ul class="w-full bg-white pt-1 px-6">
+                <!-- 食品リスト -->
+                <li v-for="food in foods" :key="food.id" class="overflow-hidden bg-white">
+                    <div class="flex w-[calc(100%+80px)] transition-transform duration-200"
+                        :style="{ transform: `translateX(${swipePositions[food.id] || 0}px)` }"
+                        @touchstart="startSwipe($event, food.id)" @touchmove="swipeItem($event, food.id)"
+                        @touchend="endSwipe(food.id)">
+                        <!-- 本体部分 -->
+                        <div class="flex w-full items-center py-3 border-b border-gray-200 bg-white"
+                            @click="openEditModal(food)">
+                            <div class="w-[10%] flex justify-start">
+                                <div class="h-2.5 w-2.5 rounded-full" :class="getStatusColor(food.expiry_date)"></div>
+                            </div>
+                            <span class="w-[60%] font-medium text-stone-900 text-left">{{ food.name }}</span>
+                            <span class="w-[30%] font-medium text-stone-900 text-left">{{ food.expiry_date }}</span>
+                        </div>
+
+                        <!-- 削除ボタン -->
+                        <button @click.stop="deleteFood(food.id)"
+                            class="w-20 bg-red-500 text-white flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="size-6">
+                                <path fill-rule="evenodd"
+                                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                                    clip-rule="evenodd" />
                             </svg>
                         </button>
                     </div>
-                    <!-- Dropdown menu -->
-                    <div id="dropdownAction"
-                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 ">
-                        <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdownActionButton">
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Reward</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Promote</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Activate
-                                    account</a>
-                            </li>
-                        </ul>
-                        <div class="py-1">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Delete
-                                User</a>
-                        </div>
-                    </div>
-                </div>
-                <a href="#" @click.prevent="isCreateModalOpen = true" class="font-medium text-orange-600">追加</a>
-            </div>
+                </li>
+            </ul>
         </div>
 
         <!-- 食品登録モーダル -->
@@ -55,48 +71,6 @@
         <!-- 食品編集モーダル -->
         <EditFoodModal :isEditModalOpen="isEditModalOpen" :foodToEdit="foodToEdit" @close="closeModal"
             @save-food="saveFood" />
-
-        <!-- 一覧リスト -->
-        <ul class="w-full text-sm text-gray-500 mt-30">
-            <!-- 見出し部分 -->
-            <li class="overflow-hidden bg-white">
-                <div class="w-[calc(100%+80px)]">
-                    <div class="flex w-full tems-center py-2 font-semibold text-gray-500 border-b border-gray-200">
-                        <span class="w-[10%] text-left"></span>
-                        <span class="w-[60%] text-left">食品名</span>
-                        <span class="w-[30%] text-left">期限</span>
-                    </div>
-                </div>
-            </li>
-            
-            <!-- 食品リスト -->
-            <li v-for="food in foods" :key="food.id" class="overflow-hidden bg-white">
-                <div class="flex w-[calc(100%+80px)] transition-transform duration-200"
-                    :style="{ transform: `translateX(${swipePositions[food.id] || 0}px)` }"
-                    @touchstart="startSwipe($event, food.id)" @touchmove="swipeItem($event, food.id)"
-                    @touchend="endSwipe(food.id)">
-                    <!-- 本体部分 -->
-                    <div class="flex w-full items-center py-3 border-b border-gray-200 bg-white"
-                        @click="openEditModal(food)">
-                        <div class="w-[10%] flex justify-start">
-                            <div class="h-2.5 w-2.5 rounded-full" :class="getStatusColor(food.expiry_date)"></div>
-                        </div>
-                        <span class="w-[60%] font-medium text-gray-900 text-left">{{ food.name }}</span>
-                        <span class="w-[30%] font-medium text-gray-900 text-left">{{ food.expiry_date }}</span>
-                    </div>
-
-                    <!-- 削除ボタン -->
-                    <button @click.stop="deleteFood(food.id)"
-                        class="w-20 bg-red-500 text-white flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                            <path fill-rule="evenodd"
-                                d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                </div>
-            </li>
-        </ul>
     </div>
 </template>
 
