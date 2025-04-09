@@ -21,7 +21,7 @@
                 <li class="overflow-hidden bg-white">
                     <div class="flex w-[calc(100%+80px)]">
                         <div
-                            class="h-12 flex w-full items-center py-2 font-semibold text-stone-600 border-b border-gray-200 bg-white">
+                            class="h-12 flex w-full items-center font-semibold text-stone-600 border-b border-gray-200 bg-white">
                             <div class="w-[10%]"></div>
                             <span class="w-[60%] text-left">食品名</span>
                             <span class="w-[30%] text-left">期限</span>
@@ -34,7 +34,7 @@
         </div>
 
         <!-- 一覧リスト -->
-        <div class="pt-42">
+        <div class="pt-44">
             <ul class="w-full bg-white pt-1 px-6">
                 <!-- 食品リスト -->
                 <li v-for="food in foods" :key="food.id" class="overflow-hidden bg-white">
