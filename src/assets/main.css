@@ -3,7 +3,8 @@
 
 @theme {
   --color-primary: #41B9D5;
-  --color-secondary: #FCFBFF;
+  --color-secondary: #F1F1F3;
+  --color-accent: #24205C;
 }
 
 #app {
