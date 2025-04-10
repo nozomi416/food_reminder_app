@@ -1,9 +1,9 @@
 <template>
-    <div class="flex justify-center mt-24 px-6">
+    <div class="flex justify-center mt-24 px-6 overflow-hidden">
         <div class="w-full">
             <form class="space-y-6" @submit.prevent="login">
                 <h5 class="text-center text-2xl font-bold text-primary">ログイン</h5>
-                <p v-if="errorMessage" class="text-red-500 mt-2">{{ errorMessage }}</p>
+                <p v-if="errorMessage" class="text-red-500 text-sm mt-2 whitespace-pre-line">{{ errorMessage }}</p>
                 <div>
                     <label for="email" class="block mb-2 font-medium text-sm text-stone-900">メールアドレス</label>
                     <input v-model="email" type="email" name="email" id="email"
@@ -14,7 +14,7 @@
                     <label for="password" class="block mb-2 font-medium text-sm text-stone-900">パスワード</label>
                     <input v-model="password" type="password" name="password" id="password" placeholder="6桁以上の英数字"
                         class="bg-gray-50 border border-gray-300 text-stone-900 rounded-lg block w-full p-2.5"
-                        required />
+                        pattern="^[a-zA-Z0-9]{6,}$" title="6桁以上の半角英数字で入力してください" required />
                     <router-link to="#" class="block font-medium text-right text-sm text-stone-400 pt-2">パスワードを忘れた方はこちら</router-link>
                 </div>
                 <button type="submit"
@@ -47,7 +47,7 @@ export default {
             });
             if (error) {
                 console.log(error)
-                errorMessage.value = "ログインに失敗しました。";
+                errorMessage.value = "ログインに失敗しました。\nメールアドレスまたはパスワードをご確認ください。";
             } else {
                 router.push("/");
             }
