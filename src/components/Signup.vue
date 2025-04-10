@@ -12,9 +12,9 @@
                 </div>
                 <div>
                     <label for="password" class="block mb-2 font-medium text-sm text-stone-900">パスワード</label>
-                    <input v-model="password" type="password" name="password" id="password" placeholder="6桁以上の英数字"
+                    <input v-model="password" type="password" name="password" id="password" placeholder="6桁以上の半角英数字"
                         class="bg-gray-50 border border-gray-300 text-stone-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        required />
+                        pattern="^[a-zA-Z0-9]{6,}$" title="6桁以上の半角英数字で入力してください" required />
                 </div>
                 <button type="submit"
                     class="w-full text-sm text-white bg-primary font-medium rounded-lg mt-1 px-5 py-3 text-center">登録</button>
@@ -23,34 +23,29 @@
                 <router-link to="/login" class="text-sm text-center text-stone-400">ログイン画面に戻る</router-link>
             </div>
         </div>
-    </div> 
+    </div>
 </template>
 
-<script>
-import { ref } from "vue";
-import { supabase } from "../supabase";
+<script setup>
+import { ref } from 'vue';
+import { supabase } from '../supabase';
 
-export default {
-    setup() {
-        const email = ref("");
-        const password = ref("");
-        const errorMessage = ref("");
+const email = ref('');
+const password = ref('');
+const errorMessage = ref('');
 
-        const signup = async () => {
-            errorMessage.value = "";
-            const { error } = await supabase.auth.signUp({
-                email: email.value,
-                password: password.value,
-            });
-            if (error) {
-                console.log(error)
-                errorMessage.value = "登録に失敗しました。";
-            } else {
-                alert("登録成功！メールを確認してください。");
-            }
-        };
+const signup = async () => {
+    errorMessage.value = ''; 
+    const { error } = await supabase.auth.signUp({
+        email: email.value,
+        password: password.value,
+    });
 
-        return { email, password, signup, errorMessage };
-    },
+    if (error) {
+        console.log(error);
+        errorMessage.value = "登録に失敗しました。";
+    } else {
+        alert("アカウントの作成が完了しました。確認メールをお送りしましたのでご確認ください。");
+    }
 };
 </script>

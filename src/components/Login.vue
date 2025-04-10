@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center pt-24 px-6 min-h-screen overflow-hidden">
+    <div class="flex justify-center mt-24 px-6">
         <div class="w-full">
             <form class="space-y-6" @submit.prevent="login">
                 <h5 class="text-center text-2xl font-bold text-primary">ログイン</h5>
@@ -27,33 +27,29 @@
     </div>
 </template>
 
-<script>
-import { ref, onMounted } from "vue";
-import { supabase } from "../supabase";
+<script setup>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { supabase } from "../supabase";
 
-export default {
-    setup() {
-        const router = useRouter();
-        const email = ref("");
-        const password = ref("");
-        const errorMessage = ref("");
+const router = useRouter();
 
-        const login = async () => {
-            errorMessage.value = "";
-            const { error } = await supabase.auth.signInWithPassword({
-                email: email.value,
-                password: password.value,
-            });
-            if (error) {
-                console.log(error)
-                errorMessage.value = "ログインに失敗しました。\nメールアドレスまたはパスワードをご確認ください。";
-            } else {
-                router.push("/");
-            }
-        };
+const email = ref("");
+const password = ref("");
+const errorMessage = ref("");
 
-        return { email, password, login, errorMessage };
-    },
+const login = async () => {
+    errorMessage.value = "";
+    const { error } = await supabase.auth.signInWithPassword({
+        email: email.value,
+        password: password.value,
+    });
+
+    if (error) {
+        console.log(error);
+        errorMessage.value = "ログインに失敗しました。\nメールアドレスまたはパスワードをご確認ください。";
+    } else {
+        router.push("/");
+    }
 };
 </script>
