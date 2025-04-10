@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center mt-24 px-6 overflow-hidden">
+    <div class="flex justify-center pt-24 px-6">
         <div class="w-full">
             <form class="space-y-6" @submit.prevent="login">
                 <h5 class="text-center text-2xl font-bold text-primary">ログイン</h5>
@@ -12,7 +12,7 @@
                 </div>
                 <div>
                     <label for="password" class="block mb-2 font-medium text-sm text-stone-900">パスワード</label>
-                    <input v-model="password" type="password" name="password" id="password" placeholder="6桁以上の英数字"
+                    <input v-model="password" type="password" name="password" id="password" placeholder="6桁以上の半角英数字"
                         class="bg-gray-50 border border-gray-300 text-stone-900 rounded-lg block w-full p-2.5"
                         pattern="^[a-zA-Z0-9]{6,}$" title="6桁以上の半角英数字で入力してください" required />
                     <router-link to="#" class="block font-medium text-right text-sm text-stone-400 pt-2">パスワードを忘れた方はこちら</router-link>
