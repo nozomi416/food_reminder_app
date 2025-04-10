@@ -45,7 +45,7 @@ const signup = async () => {
         console.log(error);
         errorMessage.value = "登録に失敗しました。";
     } else {
-        alert("アカウントの作成が完了しました。確認メールをお送りしましたのでご確認ください。");
+        alert("アカウントの作成が完了しました。\n確認メールをお送りしましたのでご確認ください。");
     }
 };
 </script>
