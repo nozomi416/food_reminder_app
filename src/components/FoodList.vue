@@ -108,6 +108,7 @@ onMounted(async () => {
     if (user) {
         formData.user_id = user.id;
         fetchFoods();
+        window.scrollTo(0, 0);
     } else {
         router.push("/login");
     }
