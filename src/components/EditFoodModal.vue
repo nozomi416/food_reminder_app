@@ -1,6 +1,6 @@
 <template>
     <div v-if="isEditModalOpen" id="editFoodModal" tabindex="-1" aria-hidden="true"
-        class="fixed inset-0 z-40 flex items-center justify-center bg-white mt-16">
+        class="fixed inset-0 z-40 flex items-center justify-center bg-white pt-10">
         <div class="relative w-full h-full">
             <form @submit.prevent="updateFood" class="relative">
                 <!-- ヘッダー -->

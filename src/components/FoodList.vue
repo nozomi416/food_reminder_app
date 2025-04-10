@@ -1,7 +1,7 @@
 <template>
     <div class="w-full">
         <!-- 固定部分 -->
-        <div class="fixed top-0 left-0 right-0 bg-secondary z-40 pt-19 text-sm">
+        <div class="fixed top-0 left-0 right-0 bg-secondary z-40 pt-14 text-sm">
             <div class="flex items-center justify-between flex-column md:flex-row flex-wrap pt-1 pb-4 px-6">
                 <div class="text-accent">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -34,8 +34,8 @@
         </div>
 
         <!-- 一覧リスト -->
-        <div class="pt-44 text-sm">
-            <ul class="w-full bg-white pt-1 px-6">
+        <div class="pt-40 text-sm">
+            <ul v-if="foods.length > 0" class="w-full bg-white pt-1 px-6">
                 <!-- 食品リスト -->
                 <li v-for="food in foods" :key="food.id" class="overflow-hidden bg-white">
                     <div class="flex w-[calc(100%+80px)] transition-transform duration-200"
@@ -65,6 +65,7 @@
                     </div>
                 </li>
             </ul>
+            <p v-else class="text-center text-gray-500 py-4">まだデータがありません。<br>追加ボタンから食品を登録しましょう！</p>
         </div>
 
         <!-- 食品登録モーダル -->
