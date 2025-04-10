@@ -35,7 +35,11 @@
 
         <!-- 一覧リスト -->
         <div class="pt-40 text-sm">
-            <ul v-if="foods.length > 0" class="w-full bg-white pt-1 px-6">
+            <ul v-if="loading"></ul>
+            <ul v-else-if="foods.length === 0" class="w-full bg-white pt-1 px-6">
+                <li class="text-center text-stone-500 py-4">まだデータがありません。<br>追加ボタンから食品を登録しましょう！</li>
+            </ul>
+            <ul v-else="foods.length > 0" class="w-full bg-white pt-1 px-6">
                 <!-- 食品リスト -->
                 <li v-for="food in foods" :key="food.id" class="overflow-hidden bg-white">
                     <div class="flex w-[calc(100%+80px)] transition-transform duration-200"
@@ -65,7 +69,6 @@
                     </div>
                 </li>
             </ul>
-            <p v-else class="text-center text-gray-500 py-4">まだデータがありません。<br>追加ボタンから食品を登録しましょう！</p>
         </div>
 
         <!-- 食品登録モーダル -->
@@ -92,6 +95,7 @@ const router = useRouter();
 let user = null;
 const isCreateModalOpen = ref(false);
 const isEditModalOpen = ref(false);
+const loading = ref(true);
 const foodToEdit = ref(null)
 const foods = ref([]);
 const formData = reactive({
@@ -123,6 +127,7 @@ const fetchFoods = async () => {
         console.log("foods: ", data)
         foods.value = data;
     }
+    loading.value = false;
 };
 
 const getStatusColor = (expiryDate) => {
