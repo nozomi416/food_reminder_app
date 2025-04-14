@@ -55,6 +55,8 @@
                 <!-- フッター -->
                 <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 z-50"
                     :style="isPWA ? { paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' } : {}">
+                    <p v-if="isPWA" class="text-xs text-gray-500 mb-2">PWAです</p>
+                    <p v-else class="text-xs text-gray-500 mb-2">PWAではない</p>
                     <button type="submit"
                         class="w-full text-white bg-primary font-medium rounded-lg text-sm py-3 text-center">
                         追加
