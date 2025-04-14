@@ -17,7 +17,7 @@
                         pattern="^[a-zA-Z0-9]{6,}$" title="6桁以上の半角英数字で入力してください" required />
                 </div>
                 <button type="submit"
-                    class="w-full text-sm text-white bg-primary font-medium rounded-lg mt-1 px-5 py-3 text-center">登録</button>
+                    class="w-full text-sm text-white bg-primary font-medium rounded-lg mt-1 px-5 py-4 text-center">登録</button>
             </form>
             <div class="font-medium mt-4 flex flex-col gap-1">
                 <router-link to="/login" class="text-sm text-center text-stone-400">ログイン画面に戻る</router-link>

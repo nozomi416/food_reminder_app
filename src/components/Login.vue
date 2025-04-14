@@ -18,7 +18,7 @@
                     <router-link to="#" class="block font-medium text-right text-sm text-stone-400 pt-2">パスワードを忘れた方はこちら</router-link>
                 </div>
                 <button type="submit"
-                    class="w-full text-sm text-white bg-primary font-medium rounded-lg mt-1 px-5 py-3 text-center">ログイン</button>
+                    class="w-full text-sm text-white bg-primary font-medium rounded-lg mt-1 px-5 py-4 text-center">ログイン</button>
             </form>
             <div class="font-medium mt-4 flex flex-col gap-1">
                 <router-link to="/signup" class="text-sm text-center text-primary">アカウントを作成する</router-link>

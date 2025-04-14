@@ -57,7 +57,7 @@
                 <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 z-50"
                     :style="isPWA ? { paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' } : {}">
                     <button type="submit"
-                        class="w-full text-white bg-primary font-medium rounded-lg text-sm py-3 text-center">
+                        class="w-full text-white bg-primary font-medium rounded-lg text-sm py-4 text-center">
                         保存
                     </button>
                 </div>
