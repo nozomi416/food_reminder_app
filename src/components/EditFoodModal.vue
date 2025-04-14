@@ -4,10 +4,10 @@
         <div class="relative w-full h-full">
             <form @submit.prevent="updateFood" class="relative">
                 <!-- ヘッダー -->
-                <div class="flex items-start justify-between px-4 pt-4">
+                <div class="flex items-start justify-between px-4 pt-6">
                     <button type="button" @click="closeModal"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-stone-900 rounded-lg w-8 h-8 ms-auto inline-flex justify-center items-center">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
@@ -19,7 +19,7 @@
                 <div class="px-6 pt-2 space-y-6">
                     <div class="grid grid-cols-6 gap-6">
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="name" class="block mb-2 text-sm font-medium text-stone-900">
+                            <label for="name" class="block mb-2 font-medium text-stone-900">
                                 食品名
                             </label>
                             <input v-model="foodToEdit.name" type="text" name="name" id="name"
@@ -27,7 +27,7 @@
                                 placeholder="例） たまご" required>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="expiry_date" class="block mb-2 text-sm font-medium text-stone-900">
+                            <label for="expiry_date" class="block mb-2 font-medium text-stone-900">
                                 期限
                             </label>
                             <input v-model="foodToEdit.expiry_date" type="date" name="expiry_date" id="expiry_date"
@@ -35,7 +35,7 @@
                                 style="appearance: none;" required>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="purchase_date" class="block mb-2 text-sm font-medium text-stone-900">
+                            <label for="purchase_date" class="block mb-2 font-medium text-stone-900">
                                 購入日
                             </label>
                             <input v-model="foodToEdit.purchase_date" type="date" name="purchase_date"
@@ -44,7 +44,7 @@
                                 style="appearance: none;">
                         </div>
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="note" class="block mb-2 text-sm font-medium text-stone-900">
+                            <label for="note" class="block mb-2 font-medium text-stone-900">
                                 メモ
                             </label>
                             <textarea v-model="foodToEdit.note" name="note" id="note" rows="4"
@@ -57,7 +57,7 @@
                 <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 z-50"
                     :style="isPWA ? { paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' } : {}">
                     <button type="submit"
-                        class="w-full text-white bg-primary font-medium rounded-lg text-sm py-4 text-center">
+                        class="w-full text-white bg-primary font-medium rounded-lg py-4 text-center">
                         保存
                     </button>
                 </div>
