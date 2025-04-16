@@ -1,57 +1,61 @@
 <template>
     <div>
-        <button @click="startScanner" class="mt-20 mb-4 px-4 py-2 bg-blue-600 text-white rounded">
+        <button @click="startScanner" class="mb-4 px-4 py-20 bg-blue-600 text-white rounded">
             バーコード読み取り
         </button>
 
-        <div id="scanner" class="w-full max-w-md border"></div>
+        <video ref="videoRef" class="w-full max-w-md border" autoplay muted playsinline></video>
 
         <p v-if="result" class="mt-4">読み取ったコード: {{ result }}</p>
     </div>
 </template>
 
 <script setup>
-import { ref, onBeforeUnmount } from 'vue'
-import Quagga from 'quagga'
+import { ref, onBeforeUnmount, defineEmits } from 'vue'
+import { BrowserMultiFormatReader  } from '@zxing/browser'
 
+const emit = defineEmits(['scanned'])
+
+const videoRef = ref(null)
 const result = ref('')
+const codeReader = new BrowserMultiFormatReader ()
 
-const startScanner = () => {
+const startScanner = async () => {
     result.value = ''
 
-    Quagga.init({
-        inputStream: {
-            name: 'Live',
-            type: 'LiveStream',
-            target: document.querySelector('#scanner'),
-            constraints: {
-                width: 640,
-                height: 480,
-                facingMode: 'environment', // 背面カメラ
-            },
-        },
-        decoder: {
-            readers: ['ean_reader'],
-        },
-        locate: true,
-    }, err => {
-        if (err) {
-            console.error('Quagga init error:', err)
+    try {
+        // カメラデバイスの取得
+        const devices = await navigator.mediaDevices.enumerateDevices()
+        const videoDevices = devices.filter(device => device.kind === 'videoinput')
+
+        if (videoDevices.length === 0) {
+            alert('カメラが見つかりません')
             return
         }
-        Quagga.start()
-    })
 
-    Quagga.onDetected(data => {
-        if (data && data.codeResult && data.codeResult.code) {
-            result.value = data.codeResult.code
-            console.log('読み取り結果:', result.value)
-            Quagga.stop()
-        }
-    })
+        const selectedDeviceId = videoDevices[0].deviceId
+
+        // カメラからの映像をvideoタグに表示
+        codeReader.decodeFromVideoDevice(
+            selectedDeviceId,
+            videoRef.value,
+            (res, err) => {
+                if (res) {
+                    result.value = res.getText()
+                    console.log('result:', result.value)
+                    codeReader.reset()
+                }
+                if (err) {
+                    console.error(err)
+                }
+            }
+        )
+    } catch (e) {
+        console.error('カメラ起動エラー:', e)
+    }
 }
 
 onBeforeUnmount(() => {
-    Quagga.stop()
+    codeReader.reset()
 })
 </script>

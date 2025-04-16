@@ -11,6 +11,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
     "@tailwindcss/vite": "^4.0.14",
+    "@zxing/browser": "^0.1.5",
     "dayjs": "^1.11.13",
     "pinia": "^3.0.2",
     "quagga": "^0.12.1",
