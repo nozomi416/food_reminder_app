@@ -15,50 +15,60 @@
                     </button>
                 </div>
 
-                <!-- 内容 -->
-                <div class="px-6 pt-2 space-y-6">
-                    <div class="grid grid-cols-6 gap-6">
+                <!-- タブ -->
+                <div class="px-6 pt-3">
+                    <div class="flex bg-stone-100 rounded-lg shadow-inner">
+                        <button v-for="tab in tabs" :key="tab" type="button" @click="currentTab = tab" :class="[
+                            'flex-1 py-3 px-4 font-medium text-center',
+                            currentTab === tab
+                                ? 'text-white bg-accent rounded-lg'
+                                : 'text-stone-500'
+                        ]">
+                            {{ tab }}
+                        </button>
+                    </div>
+                </div>
+
+                <!-- タブの内容 -->
+                <div class="pt-6">
+                    <div v-if="currentTab === '手動入力'" class="px-6 grid grid-cols-6 gap-6">
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="name" class="block mb-2 font-medium text-stone-900">
-                                食品名
-                            </label>
+                            <label for="name" class="block mb-2 font-medium text-stone-900">食品名</label>
                             <input v-model="formData.name" type="text" name="name" id="name"
                                 class="shadow-xs bg-gray-50 border border-gray-300 text-stone-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
                                 placeholder="例） たまご" required>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="expiry_date" class="block mb-2 font-medium text-stone-900">
-                                期限
-                            </label>
+                            <label for="expiry_date" class="block mb-2 font-medium text-stone-900">期限</label>
                             <input v-model="formData.expiry_date" type="date" name="expiry_date" id="expiry_date"
                                 class="shadow-xs bg-gray-50 border border-gray-300 text-stone-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
                                 style="appearance: none;" required>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="purchase_date" class="block mb-2 font-medium text-stone-900">
-                                購入日
-                            </label>
+                            <label for="purchase_date" class="block mb-2 font-medium text-stone-900">購入日</label>
                             <input v-model="formData.purchase_date" type="date" name="purchase_date" id="purchase_date"
                                 class="shadow-xs bg-gray-50 border border-gray-300 text-stone-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
                                 style="appearance: none;">
                         </div>
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="note" class="block mb-2 font-medium text-stone-900">
-                                メモ
-                            </label>
+                            <label for="note" class="block mb-2 font-medium text-stone-900">メモ</label>
                             <textarea v-model="formData.note" name="note" id="note" rows="4"
                                 class="shadow-xs bg-gray-50 border border-gray-300 text-stone-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"></textarea>
                         </div>
-                    </div>
-                </div>
 
-                <!-- フッター -->
-                <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 z-50"
-                    :style="isPWA ? { paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' } : {}">
-                    <button type="submit"
-                        class="w-full text-white bg-primary font-medium rounded-lg py-4 text-center">
-                        追加
-                    </button>
+                        <!-- フッター -->
+                        <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 z-50"
+                            :style="isPWA ? { paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' } : {}">
+                            <button type="submit"
+                                class="w-full text-white bg-primary font-medium rounded-lg py-4 text-center">
+                                追加
+                            </button>
+                        </div>
+                    </div>
+
+                    <div v-if="currentTab === '読み取り入力'" class="">
+                        <BarcodeScanner ref="barcodeScannerRef" />
+                    </div>
                 </div>
             </form>
         </div>
@@ -66,9 +76,10 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, ref, watch, nextTick } from 'vue';
 import { supabase } from "../supabase";
 import { usePWAStore } from '@/stores/pwa'
+import BarcodeScanner from './BarcodeScanner.vue';
 
 const pwaStore = usePWAStore()
 const isPWA = pwaStore.isPWA
@@ -76,8 +87,26 @@ const { isCreateModalOpen, formData } = defineProps({
     isCreateModalOpen: Boolean,
     formData: Object,
 });
+const currentTab = ref('手動入力')
+const tabs = ['手動入力', '読み取り入力']
+const barcodeScannerRef = ref(null);
 
 const emit = defineEmits(['close', 'save-food']);
+
+watch(() => isCreateModalOpen, (newVal) => {
+    if (newVal) {
+        // タブの初期設定
+        currentTab.value = '手動入力';
+    }
+});
+watch(currentTab, async (newTab) => {
+    if (newTab === '読み取り入力') {
+        await nextTick(); // レンダリング完了まで待つ
+        if (barcodeScannerRef.value) {
+            barcodeScannerRef.value.startScanner();
+        }
+    }
+});
 
 // モーダルを閉じる
 const closeModal = () => {
